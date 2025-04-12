@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"time"
 
 	"github.com/open-runtimes/types-for-go/v4/openruntimes"
 )
@@ -43,8 +42,11 @@ func Main(Context openruntimes.Context) openruntimes.Response {
 		})
 	}
 
-	client := http.Client{Timeout: 10 * time.Second}
+	client := http.Client{}
 	resp, err := client.Get(imageURL)
+	Context.Log(resp.StatusCode)
+	Context.Log(resp)
+	Context.Log(err)
 	if err != nil || resp.StatusCode != 200 {
 		return Context.Res.Json(map[string]string{
 			"error": fmt.Sprintf("Failed to fetch image: %v", err),
