@@ -62,8 +62,5 @@ func Main(Context openruntimes.Context) openruntimes.Response {
 	}
 
 	base64Str := base64.StdEncoding.EncodeToString(imgBytes)
-
-	return Context.Res.Json(map[string]string{
-		"base64": base64Str,
-	})
+	return Context.Res.Binary([]byte(base64Str))
 }
